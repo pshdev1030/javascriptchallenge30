@@ -16,7 +16,7 @@
 ## 내 답안
 ```javascript
      // Array.prototype.filter()
-    // 1. Filter the list of inventors for those who were born in the 1500's
+    // 1. Filter the list of inventors for those who were born in the 1500's.
     let array_of_1500s= inventors.filter(ele=>{
       if(ele.year<1600&&ele.year>=1500) return ele;
     });
