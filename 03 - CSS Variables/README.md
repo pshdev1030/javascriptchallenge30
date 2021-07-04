@@ -93,5 +93,5 @@ css에서 태그 안에 css변수를 이용하여 등록 후 js에서 변수명�
 * 사용 var(변수이름);
 
 ## data-
-* data-sizing으로 html의 attribute로 등록해놓고 이를 js로 접근하여 값을 가져옴
-* data뿐만 아니라 변화시킬 속성도 html의 속성으로 등록해놓고 js로 접근해서 수정함
+* data-sizing으로 html의 attribute로 등록해놓고 이를 js로 접근하여 값을 가져왔다.
+* data뿐만 아니라 변화시킬 속성도 html의 속성으로 등록해놓고 js로 접근해서 수정하였다.
