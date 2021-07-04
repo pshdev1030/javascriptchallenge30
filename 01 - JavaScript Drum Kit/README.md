@@ -86,4 +86,4 @@ window.addEventListener를 통해서 해결하였다.
 
 ## 느낀점
 vanilla js에 다뤄보지 않은 부분이 생각보다 많다는 것을 다시금 느꼈다.
-addEventListener는 복수의 동일 이벤트 타입 리스너를 등록할 수 있다..
+addEventListener는 복수의 동일 이벤트 타입 리스너를 등록할 수 있다.
