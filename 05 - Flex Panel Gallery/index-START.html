@@ -7,7 +7,7 @@
 </head>
 <body>
   <style>
-    html {
+    html { 
       box-sizing: border-box;
       background: #ffc600;
       font-family: 'helvetica neue';
@@ -25,7 +25,6 @@
 
     .panels {
       min-height: 100vh;
-      overflow: hidden;
       display:flex;
     }
 
@@ -62,6 +61,10 @@
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex:1 0 auto;
     }
 
     .panel p {
@@ -70,17 +73,14 @@
       text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
       font-size: 2em;
     }
+
+    .panel > *:first-child{transform:translateY(-100%);}
+    .panel.open-active > *:first-child{transform:translateY(0);}
+    .panel > *:last-child{transform:translateY(+100%);}
+    .panel.open-active > *:last-child{transform:translateY(0);}
     
     .panel p:nth-child(2) {
       font-size: 4em;
-    }
-
-    .panel p:nth-child(1) {
-      visibility:hidden;
-    }
-
-    .panel p:nth-child(3) {
-      visibility:hidden;
     }
 
     .panel.open {
@@ -121,17 +121,19 @@
 
   <script>
     const panel=document.getElementsByClassName('panel');
+
     for(x of panel){
-      let first=x.firstElementChild;
-      let last=x.lastElementChild;
       let cur=x;
-      x.addEventListener('click',()=>{
+      x.addEventListener('click',function(){
         cur.classList.toggle('open');
-        first.style.visibility=first.style.visibility === '' ? 'visible':'';
-        last.style.visibility=last.style.visibility === '' ? 'visible':'';
+      });
+
+      x.addEventListener('transitionend',function(e){
+        if(e.propertyName.includes('flex')){
+          cur.classList.toggle('open-active');
+        }
       })
     }
-
   </script>
 
 

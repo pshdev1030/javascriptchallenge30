@@ -233,4 +233,7 @@ flex 속성들을 css에 정의하여 클래스리스트를 추가하는 방식�
 
 ## 느낀점
 * 애니메이션쪽이 좀 막힌다.. 뭔가 시간을 투자해서 공부해야하는 건 맞는데 아깝기도 하고..
+* transitionend 이벤트에 등록해놓은 transition propertyname으로 이벤트 처리를 할 수 있다.
+
+* querySelectorAll 이랑 getElementsby~ 메서드랑 반환형이 다른것 같다. querySelectorAll은 forEach 메서드가 사용이 가능하다..
 
