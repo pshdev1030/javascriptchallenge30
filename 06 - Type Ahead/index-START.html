@@ -17,6 +17,64 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+const city=[];
+const data=fetch(endpoint)
+.then(fetcheddata=>fetcheddata.json())
+.then(citydata=>city.push(...citydata));
+
+const search=document.querySelector('.search-form > input');
+const list=document.querySelector('.suggestions');
+const listHTML=list.innerHTML;
+let debouncetimer;
+
+function amountCommas(val){
+    return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+  }
+
+function hilight(val,input){
+  const reg=new RegExp(`${input}`,'i');
+  const result=val.match(reg);
+  if(!result) return val ;
+  return val.replace(reg,`<span class=hl>${result[0]}</span>`);
+}
+
+const searchEvent=(e)=>{
+  e.preventDefault();
+  if(debouncetimer){
+    clearTimeout(debouncetimer);
+  }
+  debouncetimer=setTimeout(function(){
+  const input=e.target.value.toUpperCase();
+  if(input.length===0) {
+    list.innerHTML=listHTML;
+    return ;
+  }
+  
+  const citylist=city.reduce((acc,value)=>{
+    if(value.city.toUpperCase().includes(input)||value.state.toUpperCase().includes(input)) {
+      acc.push({
+        city: value.city,
+        state: value.state,
+        population:value.population
+      });
+    }
+    return acc;
+  },[]);
+
+  list.innerHTML="";
+
+  citylist.forEach(ele=>{
+    list.innerHTML+=`<li>
+      <span>${hilight(ele.city,input)}, 
+      ${hilight(ele.state,input)}</span>
+      <span class=population>${amountCommas(ele.population)}</span> 
+      </li>`
+  })
+  },400)
+};
+
+search.addEventListener('input',searchEvent);
+
 </script>
 </body>
 </html>
