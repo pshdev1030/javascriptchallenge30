@@ -7,6 +7,46 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas=document.getElementById('draw');
+  //canvas 엘리멘트 참조
+  const ctx=canvas.getContext('2d');
+  //랜더링 될 대상
+  ctx.lineJoin='round';
+  ctx.lineCap='round';
+  ctx.lineWidth=100;
+  
+  let lineWIdthFlag=true;
+  let color='red'
+  let hue=0;
+  let lastX=0;
+  let lastY=0;
+
+  const mouseMove=(e)=>{
+    ctx.strokeStyle=`hsl(${hue},100%,50%)`;
+    // hsl 색코드 사용 hue,saturation, lightness
+    ctx.beginPath();
+    ctx.moveTo(lastX,lastY);
+    ctx.lineTo(e.offsetX,e.offsetY);
+    ctx.stroke();
+    
+    lastX=e.offsetX;
+    lastY=e.offsetY;
+    if(ctx.lineWidth>=100||ctx.lineWidth<=1) lineWIdthFlag=!lineWIdthFlag;
+    if(lineWIdthFlag) ctx.lineWidth++;
+    else ctx.lineWidth--;
+
+    hue>360? hue=0: hue++;
+  }
+
+  canvas.addEventListener('mousedown',(e)=>{
+    lastX=e.offsetX;
+    lastY=e.offsetY;
+    canvas.addEventListener('mousemove',mouseMove);
+  });
+  canvas.addEventListener('mouseup',()=>{
+    canvas.removeEventListener('mousemove',mouseMove);
+  });
+
 </script>
 
 <style>
