@@ -96,6 +96,23 @@
   </div>
 
 <script>
+  let last;
+  const checklist=document.querySelectorAll(' .inbox input');
+  function clickEvent(e){
+    if(e.shiftKey&&this.checked){
+      let between=false;
+      checklist.forEach(ele=>{
+        if(ele===this||ele===last){
+          between=!between;
+        }
+        if(between){
+          ele.checked=true;
+        }
+      })
+    }
+      last=this;
+  };
+  checklist.forEach(ele=>ele.addEventListener('click',clickEvent));
 </script>
 </body>
 </html>
