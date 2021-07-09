@@ -73,6 +73,45 @@ checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
 
 ## 느낀점
 * 화살표 함수가 아닌 일반 함수로 작성하여 바인딩된 this를 쓸 수 있었다.
-* 구현하고 나서 true뿐만 아니라 토글을 구현해보려했는데 알고리즘이 명확하게 정리되지 않아서 구현하는데 예외경우를 완벽하게 처리하지 못하여 원래대로 납두었다.
+* ~~구현하고 나서 true뿐만 아니라 토글을 구현해보려했는데 알고리즘이 명확하게 정리되지 않아서 구현하는데 예외경우를 완벽하게 처리하지 못하여 원래대로 납두었다. ~~
 * 기본 이벤트가 있기 떄문에 구현이 약간 헷갈렸다. 특정 경우에 대한 처리만 적어주면 될 것 같다.
 * 일단 돌아가는게 중요한거 같다. 적을 떄부터 가독성을 고려하다보니 적는게 좀 막힌다..
+
+
+## 토글
+```javascript
+  let last;
+  const checklist=document.querySelectorAll(' .inbox input');
+  function clickEvent(e){
+    if(e.shiftKey&&this.checked&&last!==undefined&&last!==this){
+      let between=false;
+      checklist.forEach(ele=>{
+        if(ele===this||ele===last){
+          between=!between;
+        }
+        if(between){
+          ele.checked=true;
+        }
+      })
+    }
+    else if(e.shiftKey&&!this.checkedlast!==undefined&&last!==this){
+      let between=false;
+      checklist.forEach(ele=>{
+        if(ele===last){
+          between=!between;
+          ele.checked=false;
+        }
+        if(ele===this){
+          between=!between;
+        }
+        if(between){
+          ele.checked=false;
+        }
+      })
+    }
+      last=this;
+  };
+  checklist.forEach(ele=>ele.addEventListener('click',clickEvent));
+```
+* 조건문을 통해 구현하였다. toggle같은경우 현재 컨디션에 따라 달라져서 처리해야할 예외가 오히려 많아져서 코드가 길어져서 false와 true로 구현하였다.
+* clickEvent 함수 내부의 작업의 구성이 비슷하여서 둘을 함수로 빼서 작성하면 가독성 면에서 훨씬 좋을 것 같다. 코드도 재사용 하고..!
