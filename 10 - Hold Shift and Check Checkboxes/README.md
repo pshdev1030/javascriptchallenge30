@@ -94,7 +94,7 @@ checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
         }
       })
     }
-    else if(e.shiftKey&&!this.checkedlast!==undefined&&last!==this){
+    else if(e.shiftKey&&!this.checked&&last!==undefined&&last!==this){
       let between=false;
       checklist.forEach(ele=>{
         if(ele===last){
