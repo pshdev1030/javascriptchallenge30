@@ -7,6 +7,19 @@
 </head>
 <body>
 <script>
+  let input=[];
+  const answer='wesbos';
+
+  window.addEventListener('keyup',(e)=>{
+    input.push(e.key);
+    while(input.length>answer.length){
+      input.shift();
+    }
+    if(input.join('')===answer){
+      console.log('Ding Ding');
+      cornify_add();
+    }
+  })
 </script>
 </body>
 </html>
