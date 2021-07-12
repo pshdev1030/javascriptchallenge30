@@ -58,6 +58,22 @@
       };
     }
 
+    const imgs=document.querySelectorAll('img');
+    function slideHandler(e){
+      imgs.forEach(ele=>{
+        const curScroll=window.innerHeight+scrollY;
+        const eleHalf=ele.offsetTop+ele.height/2;
+        const eleBottom=ele.offsetTop+ele.height;
+
+        if(curScroll>eleHalf&&window.scrollY<eleBottom){
+          ele.classList.add('active');
+        }
+        else{
+          ele.classList.remove('active');
+        }
+      }) 
+    }
+    window.addEventListener('scroll',debounce(slideHandler));
   </script>
 
   <style>
