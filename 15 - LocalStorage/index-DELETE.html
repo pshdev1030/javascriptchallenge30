@@ -31,40 +31,62 @@
   const initialState=`<li>Loading Tapas...</li>`;
   // itemsList.innerHTML=`<input type="checkbox" checked/><label>hi</label>`
   const items = JSON.parse(window.localStorage.getItem('examitems'))||[];
-  function setItemList(){
-    let str=items.reduce((acc,ele,idx)=>{
+  const index=items.length-1;
+
+  function newItem(value,id){
+    return {value:value,id:id+value};
+  }
+
+  function setItemList(arr){
+    let str=arr.reduce((acc,ele)=>{
       acc=acc+
       `<li>
-        <input type="checkbox" data-id=${idx+ele}/>
-        <label data-id=${idx+ele}>${ele}</label>
+        <input type="checkbox" data-id=${ele.id}/>
+        <label data-id=${ele.id}>${ele.value}</label>
+        <button data-id=${ele.id}>Delete item</button>
       </li>`
       return acc;
     },"")
     itemsList.innerHTML=str;
   }
 
+  function deleteItem(id,arr){
+    let delitemIdx=arr.findIndex(ele=>ele.id===id);
+    arr.splice(delitemIdx,1);
+    localStorage.setItem('examitems',JSON.stringify(arr));
+  }
+
+  function pushItem(value,index,arr){
+    arr.push(newItem(value,index+1));
+    localStorage.setItem('examitems',JSON.stringify(arr));
+  }
+
   function toggleEvent(e){
+    e.preventDefault();
     if(e.target.tagName==='INPUT'||
       e.target.tagName==='LABEL'){
       let id=e.target.dataset.id;
       let input=document.querySelector(`input[data-id="${id}/"]`);
       input.checked=!input.checked;
     }
+    else if(e.target.tagName==='BUTTON'){
+      let id=e.target.dataset.id;
+      deleteItem(id,items);
+      setItemList(items);
+    }
   }
   
   function submitEvent(e){
     e.preventDefault();
-    let input=addItems.firstElementChild;
-    console.log(input.value);
-    items.push(input.value);
-    localStorage.setItem('examitems',JSON.stringify(items));
+    let input=addItems.querySelector('[name="item"]');
+    pushItem(input.value,index,items);
     input.value="";
-    setItemList();
+    setItemList(items);
   }
 
   itemsList.addEventListener('click',toggleEvent);
   addItems.addEventListener('submit',submitEvent);
-  setItemList();
+  setItemList(items);
 
 </script>
 
