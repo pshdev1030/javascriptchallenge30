@@ -29,7 +29,6 @@
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
   const initialState=`<li>Loading Tapas...</li>`;
-  // itemsList.innerHTML=`<input type="checkbox" checked/><label>hi</label>`
   const items = JSON.parse(window.localStorage.getItem('examitems'))||[];
   function setItemList(){
     let str=items.reduce((acc,ele,idx)=>{
@@ -51,7 +50,7 @@
       input.checked=!input.checked;
     }
   }
-  
+
   function submitEvent(e){
     e.preventDefault();
     let input=addItems.firstElementChild;

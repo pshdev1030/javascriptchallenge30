@@ -29,46 +29,59 @@
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
   const initialState=`<li>Loading Tapas...</li>`;
-  // itemsList.innerHTML=`<input type="checkbox" checked/><label>hi</label>`
-  const items = JSON.parse(window.localStorage.getItem('examitems'))||[];
-  const index=items.length-1;
+  const items = JSON.parse(window.localStorage.getItem('delexamitems'))||[];
+  let index=items.length;
 
   function newItem(value,id){
-    return {value:value,id:id+value};
+    return {value:value,id:id+value,done:false};
   }
 
   function setItemList(arr){
-    let str=arr.reduce((acc,ele)=>{
+    let str;
+    if(arr.length===0) str=initialState;
+    else{
+      str=arr.reduce((acc,ele)=>{
       acc=acc+
       `<li>
-        <input type="checkbox" data-id=${ele.id}/>
+        <input type="checkbox" data-id=${ele.id} ${ele.done?'checked':''}/>
         <label data-id=${ele.id}>${ele.value}</label>
         <button data-id=${ele.id}>Delete item</button>
       </li>`
       return acc;
-    },"")
+    },"");
+    }
     itemsList.innerHTML=str;
   }
 
   function deleteItem(id,arr){
     let delitemIdx=arr.findIndex(ele=>ele.id===id);
     arr.splice(delitemIdx,1);
-    localStorage.setItem('examitems',JSON.stringify(arr));
+    localStorage.setItem('delexamitems',JSON.stringify(arr));
   }
 
   function pushItem(value,index,arr){
-    arr.push(newItem(value,index+1));
-    localStorage.setItem('examitems',JSON.stringify(arr));
+    arr.push(newItem(value,index));
+    localStorage.setItem('delexamitems',JSON.stringify(arr));
+    index=index++;
+  }
+
+
+  function editCheckItem(index,arr){
+    arr[index].done=!arr[index].done
+    localStorage.setItem('delexamitems',JSON.stringify(arr));
   }
 
   function toggleEvent(e){
+    console.log(e.target);
     e.preventDefault();
     if(e.target.tagName==='INPUT'||
       e.target.tagName==='LABEL'){
       let id=e.target.dataset.id;
-      let input=document.querySelector(`input[data-id="${id}/"]`);
+      let input=document.querySelector(`input[data-id="${id}"]`);
       input.checked=!input.checked;
-    }
+      let tmp=items.findIndex(ele=>ele.id===id);
+      editCheckItem(tmp,items);
+      }
     else if(e.target.tagName==='BUTTON'){
       let id=e.target.dataset.id;
       deleteItem(id,items);
@@ -79,7 +92,7 @@
   function submitEvent(e){
     e.preventDefault();
     let input=addItems.querySelector('[name="item"]');
-    pushItem(input.value,index,items);
+    pushItem(input.value,++index,items);
     input.value="";
     setItemList(items);
   }
