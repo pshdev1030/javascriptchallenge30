@@ -182,6 +182,26 @@
     </li>
   </ul>
 <script>
+  let videos=Array.from(document.querySelectorAll("[data-time]"));
+  
+  videos=videos.reduce((acc,ele)=>{
+    let time=ele.dataset.time.split(':');
+    let minute=parseInt(time[0]);
+    let seconds=parseInt(time[1]);
+
+    acc[1]+=minute;
+    acc[2]+=seconds;
+
+    acc[1]+=Math.floor(acc[2]/60);
+    acc[2]%=60;
+    
+    acc[0]+=Math.floor(acc[1]/60);
+    acc[1]%=60;
+    return acc;
+  },Array.from({length:3},()=>0))
+
+  console.log(...videos);
+
 </script>
 </body>
 </html>
