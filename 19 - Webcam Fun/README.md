@@ -1,3 +1,17 @@
+## 20210718 DAY18
+
+## 문제정의
+* 웹캠과 캔버스의 연동
+
+## 요구조건
+* canvas
+* 웹캠
+
+## 참고한 내용
+* 모범답안을 참조하였다.
+
+## 모범 답안
+```javascript
 const video = document.querySelector('.player');
 const canvas = document.querySelector('.photo');
 const ctx = canvas.getContext('2d');
@@ -75,3 +89,9 @@ function greenScreen(pixels){
 
 getVideo();
 video.addEventListener('canplay',paintToCanvas);
+```
+
+
+## 느낀점
+* 캔버스 사용은 정말 적응이 잘 안 된다ㅠ
+* 이론으로만 배운 픽셀을 직접 조작해보는게 신기했다. 컴퓨터그래픽스 과목에서 대강 다루어본적은 있는데 좀 더 와닿았다.
