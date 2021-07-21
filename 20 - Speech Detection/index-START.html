@@ -12,6 +12,30 @@
 <script>
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  const words=document.querySelector('.words');
+  let p;
+
+  const recognition=new SpeechRecognition();
+  recognition.interimResults=true;
+  recognition.lang='ko-KR';
+  // 말을 멈추면 스크립트 생성을 멈춤
+
+  recognition.start();
+
+  recognition.onstart=function(){
+    p=document.createElement('p');
+    words.appendChild(p);
+  }
+
+  recognition.onend=function(){
+    recognition.start();
+  }
+
+  recognition.onresult=function(e){
+    let texts=Array.from(e.results).map(ele=>ele[0].transcript).join("");
+    texts=texts.trim().replace(/지은이|지은|박지은/gi,"20세 미모의 여대생");
+    p.textContent=texts;
+  }
 
 </script>
 
