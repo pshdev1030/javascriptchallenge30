@@ -22,6 +22,10 @@ const data=fetch(endpoint)
 .then(fetcheddata=>fetcheddata.json())
 .then(citydata=>city.push(...citydata));
 
+const data2=fetch("https://toyproject-efc9d-default-rtdb.firebaseio.com")
+.then(asdf=>asdf.json())
+.then(re=>console.log(re));
+
 const search=document.querySelector('.search-form > input');
 const list=document.querySelector('.suggestions');
 const listHTML=list.innerHTML;
